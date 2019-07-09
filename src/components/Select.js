@@ -22,7 +22,7 @@ class Select extends Component {
     const { options, label } = this.props
     const { current } = this.state
     return (
-      <View style={{flex: 1}}>
+      <View>
         <Text style={styleSelect.label}>{label}</Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
         {options.map( opt => {
