@@ -5,7 +5,11 @@ import Title from '../components/Title'
 
 class EMOMScreen extends Component {
   state = {
-    keyboardIsVisible: false
+    keyboardIsVisible: false,
+
+    alerts: 0,
+    countdown: 0,
+    time: '15'
   }
   componentDidMount(){
     this.kbShow = Keyboard.addListener('keyboardDidShow', () => {
@@ -27,7 +31,7 @@ class EMOMScreen extends Component {
           <Image style={{ alignSelf: 'center', marginBottom: 17 }} source={require('../../assets/settings-cog.png')} />
           <Select 
             label='Alertas:'
-            current={0}
+            current={this.state.alerts}
             options={[
               {
                 id:0, 
@@ -43,19 +47,20 @@ class EMOMScreen extends Component {
                 label: '45s'
               }
             ]} 
-            onSelect = {opt => console.log('selecionado', opt)}
+            onSelect = {opt => this.setState({ alerts: opt })}
           />
           <Select 
             label='Contagem regressiva:'
-            current={0}
+            current={this.state.countdown}
             options={[{ id: 1, label: 'sim'},{ id: 0, label: 'não'}]} 
-            onSelect = {opt => console.log('selecionado', opt)}
+            onSelect = {opt => this.setState({ countdown: opt })}
           />
           <Text style={styles.label}>Quantos minutos:</Text>
-          <TextInput style={styles.input} keyboardType='numeric' value='15' />
+          <TextInput style={styles.input} keyboardType='numeric' value={this.state.time} onChangeText={ text => this.setState({ time: text }) } />
           <Text style={styles.label}>minutos</Text>
           <Image style={{ alignSelf: 'center' }} source={require('../../assets/btn-play.png')} />
           <Text>Testar</Text>
+          <Text>{JSON.stringify(this.state)}</Text>
         </ScrollView>
       </KeyboardAvoidingView>
     )
