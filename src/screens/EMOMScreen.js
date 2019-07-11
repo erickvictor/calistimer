@@ -18,7 +18,7 @@ class EMOMScreen extends Component {
     time: '2',
 
     isRunning: false,
-    countdownValue: 5,
+    countdownValue: 0,
     count: 0
   }
   componentDidMount(){
@@ -48,7 +48,16 @@ class EMOMScreen extends Component {
       }
     }
   }
+  stop = () => {
+    clearInterval(this.countdownTimer)
+    clearInterval(this.countTimer)
+    this.setState({ isRunning: false })
+  }
   play = () => {
+    this.setState({
+      count: 0,
+      countdownValue: this.state.countdown === 1 ? 5 : 0,
+    })
     this.setState({ isRunning: true })
     const count = () => {
       this.setState({ count: this.state.count + 1 }, () => {
@@ -80,14 +89,25 @@ class EMOMScreen extends Component {
       const percTime = parseInt(((this.state.count/60) / parseInt(this.state.time))*100)
       return(
         <BackgroundProgress percentage={percMinute}>
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Text>Countdown: {this.state.countdownValue}</Text>
-            <Text>Count: {this.state.count}</Text>
-            <Time time={this.state.count} />
-            <ProgressBar percentage={percTime} />
-            <Time time={parseInt(this.state.time)*60-this.state.count} type='text2' appendedText={' restantes'} />
-            <Text>Minute: {percMinute}</Text>
-            <Text>Time: {percTime}</Text>
+          <View style={{  flex: 1, justifyContent: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Title title='EMOM' subtitle='Every Minute on the Minute' style={{ paddingTop: 0 }} />
+            </View>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Time time={this.state.count} />
+              <ProgressBar percentage={percTime} />
+              <Time time={parseInt(this.state.time)*60-this.state.count} type='text2' appendedText={' restantes'} />
+            </View>
+            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+              {
+                this.state.countdownValue > 0 ?
+                <Text style={styles.countdown}>{this.state.countdownValue}</Text>
+                : null
+              }
+              <TouchableOpacity style={{ alignSelf: 'center', marginBottom: 10 }} onPress={this.stop}>
+                <Image source={require('../../assets/btn-stop.png')} />
+              </TouchableOpacity>              
+            </View>
           </View>
         </BackgroundProgress>
       )
@@ -154,6 +174,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'Ubuntu-Regular',
     fontSize: 42
+  },
+  countdown: {
+    fontFamily: 'Ubuntu-Bold',
+    fontSize: 94,
+    textAlign: 'center',
+    color: 'white',
   },
 })
 export default EMOMScreen
