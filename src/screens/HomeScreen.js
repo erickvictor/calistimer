@@ -8,7 +8,7 @@ const HomeScreen = props => {
       <Text style={Styles.logo}>CalisTimer</Text>
       <Button style={Styles.btn} onPress={() => props.navigation.navigate('EMOM')}>EMOM</Button>
       <Button style={Styles.btn} onPress={() => props.navigation.navigate('EMOM')}>AMRAP</Button>
-      <Button style={Styles.btn} onPress={() => props.navigation.navigate('EMOM')}>Isometria</Button>
+      <Button style={Styles.btn} onPress={() => props.navigation.navigate('Isometria')}>Isometria</Button>
     </View>
   )
 }
