@@ -63,10 +63,12 @@ class IsometriaScreen extends Component {
     this.setState({ paused: !this.state.paused })
   }
   play = () => {
+    const time = this.state.goal === 0 ? '0' : this.state.time
     this.setState({
       count: 0,
       countdownValue: 5,
       paused: false,
+      time,
     })
     this.setState({ isRunning: true })
     const count = () => {
@@ -95,7 +97,7 @@ class IsometriaScreen extends Component {
   }
   render(){
     if(this.state.isRunning){
-      const percMinute = parseInt(((this.state.count)/parseInt(this.state.time))*100)
+      const percMinute = this.state.time === '0' ? 0 : parseInt(((this.state.count)/parseInt(this.state.time))*100)
       const restante = parseInt(this.state.time) >= this.state.count ? parseInt(this.state.time)-this.state.count : 0
       const opacity = !this.state.paused ? 0.6 : 1
       return(
@@ -106,7 +108,11 @@ class IsometriaScreen extends Component {
             </View>
             <View style={{ flex: 1, justifyContent: 'center' }}>
               <Time time={this.state.count} />
-              <Time time={restante} type='text2' appendedText={' restantes'} />
+              {
+                this.state.goal === 1 ?
+                <Time time={restante} type='text2' appendedText={' restantes'} />
+                : null
+              }
             </View>
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
               {
@@ -153,8 +159,13 @@ class IsometriaScreen extends Component {
             ]} 
             onSelect = {opt => this.setState({ goal: opt })}
           />
-          <Text style={styles.label}>Quantos segundos:</Text>
-          <TextInput style={styles.input} keyboardType='numeric' value={this.state.time} onChangeText={ text => this.setState({ time: text }) } />
+          { this.state.goal !== 0 ?
+            <React.Fragment>
+              <Text style={styles.label}>Quantos segundos:</Text>
+              <TextInput style={styles.input} keyboardType='numeric' value={this.state.time} onChangeText={ text => this.setState({ time: text }) } />
+            </React.Fragment>
+            : null
+          }
           <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: 10}}>
             <TouchableOpacity style={{ alignSelf: 'center' }} onPress={this.back}>
               <Image source={require('../../assets/left-arrow.png')} />
