@@ -9,6 +9,7 @@ const HomeScreen = props => {
       <Button style={Styles.btn} onPress={() => props.navigation.navigate('EMOM')}>EMOM</Button>
       <Button style={Styles.btn} onPress={() => props.navigation.navigate('AMRAP')}>AMRAP</Button>
       <Button style={Styles.btn} onPress={() => props.navigation.navigate('Isometria')}>Isometria</Button>
+      <Button style={Styles.btn} onPress={() => props.navigation.navigate('About')}>Sobre</Button>
     </View>
   )
 }
