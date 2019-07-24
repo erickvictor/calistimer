@@ -28,5 +28,11 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
+  text3:{
+    fontFamily: 'Ubuntu-Bold',
+    fontSize: 36,
+    color: 'white',
+    textAlign: 'center',
+  },
 })
 export default Timer
